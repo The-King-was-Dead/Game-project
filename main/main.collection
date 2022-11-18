@@ -1,10 +1,10 @@
 name: "main"
-instances {
-  id: "astronaut"
-  prototype: "/main/astronaut.go"
+collection_instances {
+  id: "knight1"
+  collection: "/main/knight.collection"
   position {
-    x: 683.0
-    y: 463.0
+    x: 638.0
+    y: 389.0
     z: 1.0
   }
   rotation {
@@ -14,29 +14,9 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
-  id: "knight"
-  prototype: "/main/knight.go"
-  position {
-    x: 678.0
-    y: 293.0
-    z: 1.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 1.5
+    y: 1.5
+    z: 1.5
   }
 }
 scale_along_z: 0

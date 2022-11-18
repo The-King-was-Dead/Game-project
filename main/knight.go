@@ -1,6 +1,6 @@
 components {
   id: "knight"
-  component: "/main/knight.script"
+  component: "/main/knight-old.script"
   position {
     x: 0.0
     y: 0.0

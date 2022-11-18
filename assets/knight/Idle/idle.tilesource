@@ -3,8 +3,28 @@ tile_width: 32
 tile_height: 32
 tile_margin: 0
 tile_spacing: 0
-collision: ""
+collision: "/assets/knight/Idle/Idle-Sheet.png"
 material_tag: "tile"
+convex_hulls {
+  index: 0
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 8
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 16
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 24
+  count: 8
+  collision_group: ""
+}
 collision_groups: "default"
 animations {
   id: "idle"

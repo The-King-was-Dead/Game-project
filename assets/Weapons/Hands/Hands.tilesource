@@ -3,8 +3,48 @@ tile_width: 16
 tile_height: 16
 tile_margin: 0
 tile_spacing: 0
-collision: ""
+collision: "/assets/Weapons/Hands/Hands.png"
 material_tag: "tile"
+convex_hulls {
+  index: 0
+  count: 9
+  collision_group: ""
+}
+convex_hulls {
+  index: 9
+  count: 9
+  collision_group: ""
+}
+convex_hulls {
+  index: 18
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 26
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 34
+  count: 10
+  collision_group: ""
+}
+convex_hulls {
+  index: 44
+  count: 10
+  collision_group: ""
+}
+convex_hulls {
+  index: 54
+  count: 8
+  collision_group: ""
+}
+convex_hulls {
+  index: 62
+  count: 8
+  collision_group: ""
+}
 collision_groups: "hands"
 animations {
   id: "human_left_hand"

@@ -91,7 +91,7 @@ embedded_instances {
   "  position {\n"
   "    x: 10.0\n"
   "    y: -5.0\n"
-  "    z: 2.0\n"
+  "    z: 0.0\n"
   "  }\n"
   "  rotation {\n"
   "    x: 0.0\n"
@@ -121,7 +121,7 @@ embedded_instances {
   "  }\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"sword\"\n"
+  "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
   "  data: \"tile_set: \\\"/assets/Weapons/Wood/WoodSword.tilesource\\\"\\n"
   "default_animation: \\\"sword\\\"\\n"
@@ -129,7 +129,7 @@ embedded_instances {
   "blend_mode: BLEND_MODE_ALPHA\\n"
   "\"\n"
   "  position {\n"
-  "    x: -10.0\n"
+  "    x: -11.0\n"
   "    y: 10.0\n"
   "    z: 0.0\n"
   "  }\n"
@@ -141,6 +141,26 @@ embedded_instances {
   "  }\n"
   "}\n"
   ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 2.0
+    y: 2.0
+    z: 2.0
+  }
+}
+embedded_instances {
+  id: "go"
+  data: ""
   position {
     x: 0.0
     y: 0.0

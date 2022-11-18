@@ -8,7 +8,7 @@ material_tag: "tile"
 convex_hulls {
   index: 0
   count: 12
-  collision_group: ""
+  collision_group: "sword"
 }
 convex_hulls {
   index: 12
@@ -68,7 +68,7 @@ convex_hulls {
 convex_hulls {
   index: 100
   count: 12
-  collision_group: ""
+  collision_group: "sword"
 }
 convex_hulls {
   index: 112

@@ -18,6 +18,10 @@ key_trigger {
   input: KEY_K
   action: "attack"
 }
+key_trigger {
+  input: KEY_ESC
+  action: "pause"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"

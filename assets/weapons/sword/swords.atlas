@@ -7,7 +7,7 @@ animations {
   playback: PLAYBACK_NONE
   fps: 10
   flip_horizontal: 0
-  flip_vertical: 0
+  flip_vertical: 1
 }
 animations {
   id: "anime"
@@ -18,7 +18,7 @@ animations {
   playback: PLAYBACK_NONE
   fps: 10
   flip_horizontal: 0
-  flip_vertical: 0
+  flip_vertical: 1
 }
 margin: 0
 extrude_borders: 2

@@ -7,12 +7,12 @@ local camera = require "orthographic.camera"
 local coins = 0;
 
 
-
+local SWORD_ID = hash("/sword")
 local CAMERA_ID = hash("/camera")
 
 -- these are the tweaks for the mechanics, feel free to change them for a different feeling
 -- max speed right/left
-local SPEED = 350
+local SPEED = 250
 
 -- pre-hashing ids improves performance
 local ENEMY = hash("enemy")
@@ -21,7 +21,8 @@ local COIN = hash("coin")
 local CONTACT_POINT_RESPONSE = hash("contact_point_response")
 
 
-local SPRITE_HERO = "visuals#hero"
+local SPRITE_HERO = "#hero"
+local SPRITE_SWORD = "/sword#sword"
 
 local LEFT = hash("left")
 local RIGHT = hash("right")
@@ -42,6 +43,8 @@ function init(self)
 	self.spawn_position = go.get_position()
 	-- player velocity
 	self.dir = vmath.vector3()
+	-- child here weapon
+	self.has_child = true 
 	-- which direction the player is facing
 	self.direction = nil
 end
@@ -69,11 +72,20 @@ function update(self, dt)
 	if self.crosshair then
 		local crosshair_world = go.get_world_position("crosshair")
 		local player_world = go.get_world_position()
+		-- local sword_position = player_world.y +10
 		
-		-- local angle = math.atan2(player_world.x - crosshair_world.x, crosshair_world.y - player_world.y)
-		-- local rotation = vmath.quat_rotation_z(angle)
+		local angle = math.atan2(player_world.x - crosshair_world.x, crosshair_world.y - player_world.y)
+		local rotation = vmath.quat_rotation_z(angle)
+		
 		-- msg.post(SPRITE_HERO, "play_animation", { id = anim }) 
 		sprite.set_hflip(SPRITE_HERO,  player_world.x > crosshair_world.x)
+		sprite.set_hflip(SPRITE_SWORD,  player_world.x > crosshair_world.x)
+		sprite.set_vflip(SPRITE_SWORD,  player_world.x > crosshair_world.x)
+		
+		go.set("sword", "rotation", rotation)
+
+		-- go.set("sword", "position", sword_position)
+		-- msg.post(SWORD_ID, "set_rotation",{id = rotation_i})
 	end
 		
 	-- move player

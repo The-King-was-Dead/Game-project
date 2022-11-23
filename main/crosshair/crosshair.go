@@ -1,6 +1,6 @@
 components {
   id: "crosshair"
-  component: "/main/crosshair.script"
+  component: "/main/crosshair/crosshair.script"
   position {
     x: 0.0
     y: 0.0

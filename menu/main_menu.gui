@@ -9,7 +9,7 @@ fonts {
 }
 textures {
   name: "black"
-  texture: "/assets/black.atlas"
+  texture: "/assets/menu/black.atlas"
 }
 background_color {
   x: 0.0

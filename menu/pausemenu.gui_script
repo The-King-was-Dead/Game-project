@@ -20,13 +20,14 @@ function on_input(self, action_id, action)
 	if action_id == hash("pause") and action.released then
 		if self.hidden == 1 then
 			gui.set_enabled(gui.get_node("pausemenu"), true)
+			self.hidden = 0
+			self.paused = true
 		else if self.hidden == 0 then
 			gui.set_enabled(gui.get_node("pausemenu"), false)
+			self.hidden = 1
+			self.paused = false
 		end
 		end
-			
-		self.hidden = 0
-		self.paused = not self.paused
 		if self.paused then
 			msg.post("#gameproxy", "set_time_step", {factor = 0, mode = 1})
 		else
@@ -35,10 +36,13 @@ function on_input(self, action_id, action)
 	end
 		
 	if(action_id == hash("touch") and action.released == true and self.hidden == 0) then
-		self.hidden = 1
 		local resume = gui.get_node("Resume")
 		if gui.pick_node(resume, action.x, action.y) then
 			gui.set_enabled(gui.get_node("pausemenu"), false)
+			msg.post("#gameproxy", "set_time_step", {factor = 1, mode = 1})
+			self.hidden = 1
+			self.paused = false
+			
 		end
 		local exit = gui.get_node("Exit")
 		if(gui.pick_node(exit,action.x,action.y)) then

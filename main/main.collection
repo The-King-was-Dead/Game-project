@@ -99,7 +99,7 @@ instances {
   position {
     x: 200.0
     y: 200.0
-    z: 1.0
+    z: 0.2
   }
   rotation {
     x: 0.0
@@ -116,6 +116,86 @@ instances {
 instances {
   id: "sword"
   prototype: "/main/items/sword.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.3
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "large_clouds"
+  prototype: "/main/levels/background/large_clouds.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "small_clouds"
+  prototype: "/main/levels/background/small_clouds.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "large_clouds2"
+  prototype: "/main/levels/background/large_clouds2.go"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "small_clouds2"
+  prototype: "/main/levels/background/small_clouds2.go"
   position {
     x: 0.0
     y: 0.0
@@ -136,6 +216,10 @@ instances {
 scale_along_z: 0
 embedded_instances {
   id: "level"
+  children: "large_clouds"
+  children: "large_clouds2"
+  children: "small_clouds"
+  children: "small_clouds2"
   data: "components {\n"
   "  id: \"forest1\"\n"
   "  component: \"/main/levels/forest/forest1.tilemap\"\n"
@@ -153,11 +237,55 @@ embedded_instances {
   "  property_decls {\n"
   "  }\n"
   "}\n"
+  "components {\n"
+  "  id: \"forest\"\n"
+  "  component: \"/main/levels/forest/forest.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/main/levels/forest/forest1.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "linear_damping: 0.0\\n"
+  "angular_damping: 0.0\\n"
+  "locked_rotation: false\\n"
+  "bullet: false\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
   ""
   position {
     x: 0.0
     y: 0.0
-    z: -1.0
+    z: -0.1
   }
   rotation {
     x: 0.0

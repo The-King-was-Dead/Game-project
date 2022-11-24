@@ -1,5 +1,5 @@
 -- Player logic
-go.property("max_camera_offset", vmath.vector3(35, 75, 0))
+go.property("max_camera_offset", vmath.vector3(10, 20, 0))
 go.property("camera_offset_lerp", 0.05)
 go.property("crosshair", true)
 
@@ -12,7 +12,8 @@ local CAMERA_ID = hash("/camera")
 
 -- these are the tweaks for the mechanics, feel free to change them for a different feeling
 -- max speed right/left
-local SPEED = 250
+local SPEED = 100
+local GROUND = hash("ground")
 
 -- pre-hashing ids improves performance
 local ENEMY = hash("enemy")

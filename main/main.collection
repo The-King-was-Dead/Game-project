@@ -17,8 +17,13 @@ instances {
     id: "script"
     properties {
       id: "zoom"
-      value: "1.0"
+      value: "3.0"
       type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "projection"
+      value: "FIXED_ZOOM"
+      type: PROPERTY_TYPE_HASH
     }
     properties {
       id: "follow"
@@ -62,17 +67,17 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
+    x: 0.3
+    y: 0.3
+    z: 0.3
   }
 }
 instances {
   id: "goldcoin"
   prototype: "/main/resources/goldcoin.go"
   position {
-    x: 1002.0
-    y: 258.0
+    x: 200.0
+    y: 100.0
     z: 0.0
   }
   rotation {
@@ -82,8 +87,8 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 4.0
-    y: 4.0
+    x: 1.0
+    y: 1.0
     z: 1.0
   }
 }
@@ -94,7 +99,7 @@ instances {
   position {
     x: 200.0
     y: 200.0
-    z: 0.0
+    z: 1.0
   }
   rotation {
     x: 0.0
@@ -103,9 +108,9 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 3.0
-    y: 3.0
-    z: 3.0
+    x: 1.0
+    y: 1.0
+    z: 1.0
   }
 }
 instances {
@@ -114,7 +119,7 @@ instances {
   position {
     x: 0.0
     y: 0.0
-    z: 1.0
+    z: 0.0
   }
   rotation {
     x: 0.0
@@ -132,8 +137,8 @@ scale_along_z: 0
 embedded_instances {
   id: "level"
   data: "components {\n"
-  "  id: \"level\"\n"
-  "  component: \"/main/level/forest/level.tilemap\"\n"
+  "  id: \"forest1\"\n"
+  "  component: \"/main/levels/forest/forest1.tilemap\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

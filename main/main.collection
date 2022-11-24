@@ -113,7 +113,7 @@ instances {
   prototype: "/main/items/sword.go"
   position {
     x: 0.0
-    y: -2.0
+    y: 0.0
     z: 1.0
   }
   rotation {

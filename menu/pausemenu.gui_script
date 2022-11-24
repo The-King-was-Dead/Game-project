@@ -1,23 +1,74 @@
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	msg.post("#gameproxy", "load")
 	gui.set_enabled(gui.get_node("pausemenu"), false)
+	self.start = gui.get_node("Resume")
+	self.exit = gui.get_node("Exit")
+	self.is_resume = false
+	self.is_exit = false
 	self.hidden = 1
+	self.paused = false
+	
+end
+function on_message(self, message_id, message, sender)
+	if message_id == hash("proxy_loaded") then
+		msg.post(sender, "enable")
+	end
 end
 
 function on_input(self, action_id, action)
 	if action_id == hash("pause") and action.released then
-		gui.set_enabled(gui.get_node("pausemenu"), true)
+		if self.hidden == 1 then
+			gui.set_enabled(gui.get_node("pausemenu"), true)
+		else if self.hidden == 0 then
+			gui.set_enabled(gui.get_node("pausemenu"), false)
+		end
+		end
+			
 		self.hidden = 0
+		self.paused = not self.paused
+		if self.paused then
+			msg.post("#gameproxy", "set_time_step", {factor = 0, mode = 1})
+		else
+			msg.post("#gameproxy", "set_time_step", {factor = 1, mode = 1})
+		end
 	end
+		
 	if(action_id == hash("touch") and action.released == true and self.hidden == 0) then
 		self.hidden = 1
-		local resume = gui.get_node("resume")
+		local resume = gui.get_node("Resume")
 		if gui.pick_node(resume, action.x, action.y) then
 			gui.set_enabled(gui.get_node("pausemenu"), false)
 		end
-		local exit = gui.get_node("exit")
+		local exit = gui.get_node("Exit")
 		if(gui.pick_node(exit,action.x,action.y)) then
 			msg.post("@system:", "exit", {code = 0})
+		end
+	end
+	if action_id == nil then
+		if gui.pick_node(self.start, action.x, action.y) then 
+			if not self.is_resume then
+				gui.set_font(self.start, "menu_hover")
+				self.is_resume = true
+			end
+		else
+			if self.is_resume then
+				gui.set_font(self.start, "mainmenu")
+				self.is_resume = false
+			end
+		end
+		if action_id == nil then
+			if gui.pick_node(self.exit, action.x, action.y) then 
+				if not self.is_exit then
+					gui.set_font(self.exit, "menu_hover")
+					self.is_exit = true
+				end
+			else
+				if self.is_exit then
+					gui.set_font(self.exit, "mainmenu")
+					self.is_exit = false
+				end
+			end
 		end
 	end
 end

@@ -1,4 +1,5 @@
 local CURRENT_COINS = hash("current_coins")
+local CURRENT_HEALTH = hash("health_update")
 
 function init(self)
 	-- Add initialization code here
@@ -23,6 +24,10 @@ function on_message(self, message_id, message, sender)
 		print("gui reached")
 		local coinNode = gui.get_node("gold_count")
 		gui.set_text(coinNode, message.coins)
+	end
+	if message_id == CURRENT_HEALTH then
+		local healthNode = gui.get_node("health_count")
+		gui.set_text(healthNode, message.health)
 	end
 	-- Add message-handling code here
 	-- Learn more: https://defold.com/manuals/message-passing/

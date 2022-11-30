@@ -3,10 +3,11 @@ local TRIGGER_RESPONSE = hash("trigger_response")
 local HITBOX = hash("Hitbox")
 local PLAYER = hash("player")
 local SPRITE = hash("sprite")
-local ATTACK_OVER = hash("attack_complete")
-go.property("speed", 10)
+local ENEMY = hash("enemy")
+local EDGE = hash("edge")
 
 
+go.property("speed", 20)
 
 function init(self)
 	self.anim = nil
@@ -15,7 +16,9 @@ function init(self)
 	self.isAttacking = false;
 	self.currentDistanceFromEnemy = 0;
 	self.lastDistanceFromEnemy = 0;
-	msg.post("enemy#Hitbox", "disable")
+	msg.post("#Hitbox", "disable")
+	self.correction = vmath.vector3()
+	print(self.speed)
 	
 	-- Add initialization code here
 	-- Learn more: https://defold.com/manuals/script/
@@ -46,17 +49,20 @@ local function angle_to(id)
 end
 
 local function handle_damage_event(self)
-	msg.post("hero#script", "damage_taken")
+	player_pos = go.get_position("hero")
+	current_pos = go.get_position()
+	direction = vmath.normalize(player_pos - current_pos)
+	msg.post("hero#script", "damage_taken",{direction = direction})
 end
 
 local function checkFrame(self,anim,frame)
 	if(self.anim == anim) then
-		cursor = go.get("enemy#sprite", "cursor")
+		cursor = go.get("#sprite", "cursor")
 
-		if(cursor > frame and cursor < frame+0.1) then
-			msg.post("enemy#Hitbox", "enable")
+		if(cursor > frame and cursor < frame+0.05) then
+			msg.post("#Hitbox", "enable")
 		else
-			msg.post("enemy#Hitbox", "disable")
+			msg.post("#Hitbox", "disable")
 		end
 	end
 end
@@ -80,12 +86,13 @@ function doAttack(self)
 end
 
 function update(self, dt)
+	self.correction = vmath.vector3()
 	update_animations(self)
 	doAttack(self)
 	local player_pos = go.get_position("hero")
 	current_pos = go.get_position()
 	direction = vmath.normalize(player_pos - current_pos)
-	new_pos = current_pos + direction * 20 * dt
+	new_pos = current_pos + direction * self.speed * dt
 	sprite.set_hflip("#sprite", current_pos.x > player_pos.x)
 	physics.set_hflip("#Hitbox", current_pos.x > player_pos.x)
 	if self.contact == false then
@@ -119,8 +126,26 @@ function on_message(self, message_id, message, sender)
 	if message_id == COLLISION_RESPONSE then
 		if message.group == hash("player") and not self.contact then
 			handle_player_contact(self)
-		end
+		end		
 	end
+	if message_id == hash("contact_point_response") then
+		if message.group == ENEMY or message.group == PLAYER or message.group == EDGE then
+			if message.distance > 0 then
+				-- First, project the accumulated correction onto
+				-- the penetration vector
+					local proj = vmath.project(self.correction, message.normal * message.distance)
+
+					if proj < 1 then
+						-- Only care for projections that does not overshoot.
+						local comp = (message.distance - message.distance * proj) * message.normal
+						-- Apply compensation
+						go.set_position(go.get_position() + comp)
+						-- Accumulate correction done
+						self.correction = self.correction + comp
+					end
+				end
+			end
+		end
 	if message_id == TRIGGER_RESPONSE and sender.fragment == HITBOX then
 		if message.enter then
 			handle_damage_event(self)

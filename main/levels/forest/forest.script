@@ -4,4 +4,33 @@ local BACKGROUND_COLOR = vmath.vector4(130/255, 192/255, 204/255, 255/255)
 function init(self)
 	-- msg.post("@render:", "use_fixed_projection", { zoom = 3, near = -10, far = 10 })
 	msg.post("@render:", "clear_color", { color = BACKGROUND_COLOR })
+
+	self.enemies= {}
+	self.enemy_spawners = {}
+	start_enemy_spawner(self)
+end
+
+function start_enemy_spawner(self)
+	local delay = math.max(1, 10)
+	timer.delay(delay, false, function()
+		local position = self.enemy_spawners[math.random(1, #self.enemy_spawners)]
+		create_enemy(self, position)
+		start_enemy_spawner(self)
+	end)
+end
+
+function create_enemy(self,position)
+	random_speed = math.random(10,30)
+	local id = factory.create("factory#enemy_factory",position,nil,{speed = random_speed});
+	self.enemies[id] = {
+		id = id
+	}
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("register_enemy_spawner") then
+		table.insert(self.enemy_spawners, go.get_position(message.id))
+		print("registered spawner")
+	end
+	
 end

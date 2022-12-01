@@ -17,3 +17,6 @@ height = 1080
 default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
 
+[physics]
+debug = 1
+

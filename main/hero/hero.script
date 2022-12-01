@@ -8,6 +8,7 @@ local coins = 0
 
 local NORMAL_THRESHOLD = 0.7
 local SWORD_ID = hash("/sword")
+local DAMAGE_TAKEN = hash("damage_taken")
 local CAMERA_ID = hash("/camera")
 
 -- these are the tweaks for the mechanics, feel free to change them for a different feeling
@@ -35,6 +36,10 @@ local ANIM_IDLE = hash("idle")
 local ANIM_HIT = hash("hit")
 -- 
 
+
+local hit_easing = { 0, 1, 1, 1, 1, 1, 1, 0, 0 }
+local custom_easing = vmath.vector(hit_easing)
+
 function init(self)
 	-- this lets us handle input in this script
 	msg.post(".", "acquire_input_focus")
@@ -48,6 +53,9 @@ function init(self)
 	self.has_child = true 
 	-- which direction the player is facing
 	self.direction = nil
+	self.health = 100
+	self.correction = vmath.vector3()
+	self.tint_animation = false
 end
 
 local function play_animation(self, anim)
@@ -55,6 +63,26 @@ local function play_animation(self, anim)
 	if anim ~= self.anim then
 		msg.post(SPRITE_HERO, "play_animation", { id = anim }) 
 		self.anim = anim                               -- [5]
+	end
+end
+
+local function handle_damage_event(self,direction)
+	self.health = self.health - 10
+	local to = go.get_position() + (direction * 15)
+	-- checks if knockback final position has any edges along the way using raycasting
+	-- to prevent falling out of the map
+	result = physics.raycast(go.get_position(), to, { hash("edge") })
+	if not result then
+		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD,to, go.EASING_INOUTQUAD, 0.2)
+	end
+	
+	msg.post("main:/hud#hud", "health_update",{health = self.health})
+	camera.shake(CAMERA_ID, 0.004, 0.25,hash("both"));
+	if not self.tint_animation then
+		self.tint_animation = true
+		go.animate("hero#hero", "tint", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 0, 0, 4), custom_easing, .3,0,function() 
+			self.tint_animation = false
+		end)
 	end
 end
 
@@ -68,7 +96,7 @@ local function update_animations(self)
 end
 
 function update(self, dt)
-
+	self.correction = vmath.vector3()
 	-- rotate towards cursor
 	if self.crosshair then
 		local crosshair_world = go.get_world_position("crosshair")
@@ -129,21 +157,35 @@ end
 
 
 function on_message(self, message_id, message, sender)
-	print(message_id)
 	-- check if we received a contact point message
 	if message_id == CONTACT_POINT_RESPONSE then
 		-- check that the object is something we consider an obstacle
 		if message.group == EDGE then
 			-- Block player if he is touching the edge
-			go.set_position(go.get_position() + message.normal * message.distance)
-			-- handle_obstacle_contact(self, message.normal, message.distance)
+			if message.distance > 0 then
+				-- First, project the accumulated correction onto
+				-- the penetration vector
+				local proj = vmath.project(self.correction, message.normal * message.distance)
+	
+				if proj < 1 then
+					-- Only care for projections that does not overshoot.
+					local comp = (message.distance - message.distance * proj) * message.normal
+					-- Apply compensation
+					go.set_position(go.get_position() + comp)
+					-- Accumulate correction done
+					self.correction = self.correction + comp
+				end
+			end
 		elseif message.group == COIN then
 			coins =  coins + 1;
-			msg.post("/hud#hud", "current_coins",{coins = coins})
+			msg.post("main:/hud#hud", "current_coins",{coins = coins})
 			go.delete(message.other_id)
-		elseif message.group == RESPAWMN or message.group == ENEMY then
+		elseif message.group == RESPAWMN then
 			go.set_position(self.spawn_position)
 		end
+	end
+	if message_id == DAMAGE_TAKEN then
+		handle_damage_event(self,message.direction)
 	end
 end
 

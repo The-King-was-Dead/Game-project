@@ -6538,7 +6538,7 @@ convex_hulls {
 convex_hulls {
   index: 1981
   count: 4
-  collision_group: ""
+  collision_group: "edge"
 }
 convex_hulls {
   index: 1985
@@ -16673,12 +16673,12 @@ convex_hulls {
 convex_hulls {
   index: 6319
   count: 10
-  collision_group: ""
+  collision_group: "edge"
 }
 convex_hulls {
   index: 6329
   count: 8
-  collision_group: ""
+  collision_group: "edge"
 }
 convex_hulls {
   index: 6337
@@ -16698,12 +16698,12 @@ convex_hulls {
 convex_hulls {
   index: 6337
   count: 8
-  collision_group: ""
+  collision_group: "edge"
 }
 convex_hulls {
   index: 6345
   count: 8
-  collision_group: ""
+  collision_group: "edge"
 }
 convex_hulls {
   index: 6353

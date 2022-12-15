@@ -8,8 +8,11 @@ local coins = 0
 
 local NORMAL_THRESHOLD = 0.7
 local SWORD_ID = hash("/sword")
+local SWORD_ID = hash("/sword")
+
 local DAMAGE_TAKEN = hash("damage_taken")
 local CAMERA_ID = hash("/camera")
+local ATTACK = hash("attack")
 
 -- these are the tweaks for the mechanics, feel free to change them for a different feeling
 -- max speed right/left
@@ -25,6 +28,7 @@ local CONTACT_POINT_RESPONSE = hash("contact_point_response")
 
 local SPRITE_HERO = "#hero"
 local SPRITE_SWORD = "/sword#sword"
+local SPRITE_BOW = "/bow#sprite"
 
 local LEFT = hash("left")
 local RIGHT = hash("right")
@@ -51,6 +55,7 @@ function init(self)
 	self.dir = vmath.vector3()
 	-- child here weapon
 	self.has_child = true 
+	self.active_weapon = "bow"
 	-- which direction the player is facing
 	self.direction = nil
 	self.health = 100
@@ -108,10 +113,12 @@ function update(self, dt)
 		
 		-- msg.post(SPRITE_HERO, "play_animation", { id = anim }) 
 		sprite.set_hflip(SPRITE_HERO,  player_world.x > crosshair_world.x)
-		sprite.set_hflip(SPRITE_SWORD,  player_world.x > crosshair_world.x)
-		sprite.set_vflip(SPRITE_SWORD,  player_world.x > crosshair_world.x)
+		if self.active_weapon == "sword" then
+			sprite.set_hflip(SPRITE_BOW,  player_world.x > crosshair_world.x)
+			sprite.set_vflip(SPRITE_BOW,  player_world.x > crosshair_world.x)
+		end
 		
-		go.set("sword", "rotation", rotation)
+		go.set(self.active_weapon, "rotation", rotation)
 
 		-- go.set("sword", "position", sword_position)
 		-- msg.post(SWORD_ID, "set_rotation",{id = rotation_i})
@@ -190,12 +197,35 @@ function on_message(self, message_id, message, sender)
 end
 
 
+local function attack(self)
+	if self.active_weapon == "bow" then
+		local direction = go.get_rotation("bow") 
+		local offset = vmath.rotate(direction, vmath.vector3(0, 50, 0))
+		local og_offset = vmath.rotate(direction, vmath.vector3(0,5,0))
+		local id = factory.create("#factory",go.get_position())
+		go.set_position(go.get_position() + og_offset, id)
+		go.set_rotation(direction,id)
+		go.animate(id, "position", go.PLAYBACK_ONCE_FORWARD, go.get_position() + offset, go.EASING_LINEAR, 0.4,0,function()
+			go.delete(id)
+		end
+	)
+	else
+		-- implement sword attack
+	end 
+
+end
+
 function on_input(self, action_id, action)
 	if action_id then
 		if action.pressed then
 			self.input[action_id] = true
 		elseif action.released then
 			self.input[action_id] = false
+		end
+	end
+	if action_id == ATTACK then
+		if action.released then
+			attack(self)
 		end
 	end
 

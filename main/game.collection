@@ -95,31 +95,12 @@ instances {
 instances {
   id: "hero"
   prototype: "/main/hero/hero.go"
+  children: "bow"
   children: "sword"
   position {
     x: 200.0
     y: 200.0
     z: 0.2
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
-  id: "sword"
-  prototype: "/main/items/sword.go"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.3
   }
   rotation {
     x: 0.0
@@ -260,6 +241,46 @@ instances {
     x: 306.0
     y: 71.0
     z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "bow"
+  prototype: "/main/items/bow.go"
+  position {
+    x: 0.0
+    y: -2.0
+    z: 0.3
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "sword"
+  prototype: "/main/items/sword.go"
+  position {
+    x: 0.0
+    y: -4.0
+    z: -5.0
   }
   rotation {
     x: 0.0

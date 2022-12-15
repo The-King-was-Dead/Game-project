@@ -15,7 +15,7 @@ key_trigger {
   action: "right"
 }
 key_trigger {
-  input: KEY_K
+  input: KEY_SPACE
   action: "attack"
 }
 key_trigger {

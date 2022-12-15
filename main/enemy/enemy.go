@@ -45,6 +45,7 @@ embedded_components {
   "mask: \"player\"\n"
   "mask: \"enemy\"\n"
   "mask: \"edge\"\n"
+  "mask: \"bullet\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
@@ -114,6 +115,24 @@ embedded_components {
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
   "bullet: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "factory"
+  type: "factory"
+  data: "prototype: \"/main/resources/goldcoin.go\"\n"
+  "load_dynamically: false\n"
   ""
   position {
     x: 0.0

@@ -8,14 +8,21 @@ local EDGE = hash("edge")
 
 
 go.property("speed", 20)
+go.property("health", 100)
+go.property("attack_rate", 2)
+
+local hit_easing = { 0, 1, 1, 1, 1, 1, 1, 0, 0 }
+local custom_easing = vmath.vector(hit_easing)
 
 function init(self)
 	self.anim = nil
 	self.contact = false
+	self.dead = false
 	self.fliph = false;
 	self.isAttacking = false;
 	self.currentDistanceFromEnemy = 0;
 	self.lastDistanceFromEnemy = 0;
+	self.tint_animation = false
 	msg.post("#Hitbox", "disable")
 	self.correction = vmath.vector3()
 	print(self.speed)
@@ -29,7 +36,11 @@ local function play_animation(self, anim)
 	-- only play animations which are not already playing
 	if self.anim ~= anim then
 		-- tell the sprite to play the animation
-		sprite.play_flipbook("#sprite", anim)
+		if anim == "attack" then
+			sprite.play_flipbook("#sprite", anim,nil, {offset = 0,playback_rate = self.attack_rate})
+		else
+			sprite.play_flipbook("#sprite", anim)
+		end
 		-- remember which animation is playing
 		self.anim = anim
 	end
@@ -115,6 +126,22 @@ end
 	-- Learn more: https://defold.com/manuals/script/
 	-- Remove this function if not needed
 
+local function handle_enemy_damage(self)
+	if not self.tint_animation then
+		self.tint_animation = true
+		go.animate("#sprite", "tint", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 0, 0, 4), custom_easing, .3,0,function() 
+			self.tint_animation = false
+		end)
+	end
+	self.health = self.health - 50
+	print(self.health)
+	if self.health == 0 then
+		msg.post("level#forest", "kill_enemy")
+		pos = go.get_position()
+		factory.create("#factory",pos)
+		go.delete(".")
+	end
+end 
 
 function fixed_update(self, dt)
 	-- Add update code here
@@ -126,7 +153,11 @@ function on_message(self, message_id, message, sender)
 	if message_id == COLLISION_RESPONSE then
 		if message.group == hash("player") and not self.contact then
 			handle_player_contact(self)
-		end		
+		end
+		if message.group == hash("bullet") then
+			go.delete(message.other_id)
+			handle_enemy_damage(self)
+		end
 	end
 	if message_id == hash("contact_point_response") then
 		if message.group == ENEMY or message.group == PLAYER or message.group == EDGE then

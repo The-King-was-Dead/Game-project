@@ -8,7 +8,6 @@ function init(self)
 end
 
 function update(self, dt)
-	print("hello")
 	local cursor_pos = camera.screen_to_world(CAMERA_ID, self.crosshair)
 	cursor_pos = vmath.lerp(0.5, go.get_position(), cursor_pos)
 	go.set_position(cursor_pos)

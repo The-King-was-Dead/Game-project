@@ -11,12 +11,8 @@ function init(self)
 	self.is_exit = false
 	self.hidden = 1
 	self.paused = false
-<<<<<<< HEAD
 	msg.post("/go#fortress-short", "play_sound")	
-=======
 	defos.set_cursor_visible(true)
-	
->>>>>>> 7598371ac2c0bd62b30c6cfda8125efe8f05f337
 end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("proxy_loaded") then

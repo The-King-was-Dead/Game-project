@@ -5,5 +5,6 @@
 return {
 	player = {
 		coins = 0,
+		level = 1
 	}
 }

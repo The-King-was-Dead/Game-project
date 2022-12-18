@@ -20,4 +20,5 @@ default_texture_mag_filter = nearest
 
 [physics]
 debug = 0
+world_count = 7
 

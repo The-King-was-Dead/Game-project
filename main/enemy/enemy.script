@@ -132,6 +132,7 @@ local function handle_enemy_damage(self)
 		go.animate("#sprite", "tint", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 0, 0, 4), custom_easing, .3,0,function() 
 			self.tint_animation = false
 		end)
+		play_animation(self, hash("hit"))
 	end
 	self.health = self.health - 50
 	msg.post("/hud/sounds#enemyHit", "play_sound")

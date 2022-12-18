@@ -294,6 +294,26 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "light"
+  prototype: "/main/levels/source/light.go"
+  position {
+    x: 184.0
+    y: 305.0
+    z: -1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.8
+    y: 0.8
+    z: 1.0
+  }
+}
 collection_instances {
   id: "hud"
   collection: "/main/hud.collection"

@@ -43,6 +43,8 @@ function init(self)
 	self.start_time = socket.gettime()
 	self.ended = false
 	self.waves = 0
+	self.light_pos = go.get_world_position("/light")
+	msg.post("light#collisionobject", "disable")
 	for k, v in pairs(timeline) do
 		self.waves = self.waves + 1
 	end
@@ -59,18 +61,18 @@ function update(self,dt)
 		end
 	end 
 	
-	if self.ended ==false and self.enemies_count == 0 and self.wave == self.waves then
+	if self.ended == false and self.enemies_count == 0 and self.wave == self.waves then
 		self.ended = true
-		msg.post("level1:/hud/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
+		msg.post("/hud/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
 		defsave.set("player", "level", defsave.get("player", "level") + 1)
-		timer.delay(10, false, function(self)
-			msg.post("loader:/go#loader", "start_level_2")
-		end)
+		self.light_pos = vmath.vector3(self.light_pos.x, self.light_pos.y, 1)
+		go.set_position(self.light_pos, "/light")
+		msg.post("light#collisionobject", "enable")
 	end
 end
 
 function start_enemy_spawner(self,enemies,difficulty,attack_rate,spawn_rate)
-	msg.post("level1:/hud/hud#hud", "round_update",{wave = string.format("WAVE %d", self.wave + 1)})
+	msg.post("/hud/hud#hud", "round_update",{wave = string.format("WAVE %d", self.wave + 1)})
 	self.wave = self.wave + 1
 	self.enemies_count = enemies
 		enemy_count = 0

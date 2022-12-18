@@ -69,7 +69,7 @@ instances {
   scale3 {
     x: 0.3
     y: 0.3
-    z: 0.3
+    z: 0.4
   }
 }
 instances {
@@ -294,6 +294,26 @@ instances {
     z: 1.0
   }
 }
+instances {
+  id: "light"
+  prototype: "/main/levels/source/light.go"
+  position {
+    x: 184.0
+    y: 305.0
+    z: -1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 0.8
+    y: 0.8
+    z: 1.0
+  }
+}
 collection_instances {
   id: "hud"
   collection: "/main/hud.collection"
@@ -326,7 +346,7 @@ embedded_instances {
   children: "small_clouds2"
   data: "components {\n"
   "  id: \"forest_dark\"\n"
-  "  component: \"/main/levels/forest_dark/forest_dark.tilemap\"\n"
+  "  component: \"/main/levels/forest_dark/forest1_dark.tilemap\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -343,7 +363,7 @@ embedded_instances {
   "}\n"
   "components {\n"
   "  id: \"forest\"\n"
-  "  component: \"/main/levels/forest_dark/forest.script\"\n"
+  "  component: \"/main/levels/forest_dark/forest_dark.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"

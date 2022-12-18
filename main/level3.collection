@@ -1,4 +1,4 @@
-name: "level0"
+name: "level3"
 instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
@@ -69,18 +69,16 @@ instances {
   scale3 {
     x: 0.3
     y: 0.3
-    z: 0.3
+    z: 0.4
   }
 }
 instances {
-  id: "hero"
-  prototype: "/main/hero/hero.go"
-  children: "bow"
-  children: "sword"
+  id: "goldcoin"
+  prototype: "/main/resources/goldcoin.go"
   position {
     x: 200.0
-    y: 200.0
-    z: 0.2
+    y: 100.0
+    z: 0.0
   }
   rotation {
     x: 0.0
@@ -99,7 +97,7 @@ instances {
   prototype: "/main/levels/background/large_clouds.go"
   position {
     x: 0.0
-    y: 135.0
+    y: 0.0
     z: 0.0
   }
   rotation {
@@ -139,7 +137,7 @@ instances {
   prototype: "/main/levels/background/small_clouds.go"
   position {
     x: 0.0
-    y: 65.0
+    y: 0.0
     z: 0.0
   }
   rotation {
@@ -175,12 +173,94 @@ instances {
   }
 }
 instances {
+  id: "factory"
+  prototype: "/main/enemy/factory.go"
+  position {
+    x: 59.0
+    y: 259.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.008726535
+    w: 0.9999619
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "factory1"
+  prototype: "/main/enemy/factory.go"
+  position {
+    x: 314.0
+    y: 278.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "factory2"
+  prototype: "/main/enemy/factory.go"
+  position {
+    x: 306.0
+    y: 71.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "hero"
+  prototype: "/main/hero/hero.go"
+  children: "bow"
+  children: "sword"
+  position {
+    x: 181.0
+    y: 184.0
+    z: 0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
   id: "bow"
   prototype: "/main/items/bow.go"
   position {
     x: 0.0
-    y: -2.0
-    z: 0.2
+    y: 0.0
+    z: 0.3
   }
   rotation {
     x: 0.0
@@ -199,48 +279,8 @@ instances {
   prototype: "/main/items/sword.go"
   position {
     x: 0.0
-    y: -4.0
-    z: -5.0
-  }
-  rotation {
-    x: 0.0
     y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
-  id: "wizard"
-  prototype: "/main/wizards/wizard.go"
-  position {
-    x: 139.0
-    y: 228.0
-    z: 0.1
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-instances {
-  id: "vendor"
-  prototype: "/main/vendor/vendor.go"
-  position {
-    x: 280.0
-    y: 246.0
-    z: 0.0
+    z: -2.0
   }
   rotation {
     x: 0.0
@@ -259,8 +299,8 @@ instances {
   prototype: "/main/levels/source/light.go"
   position {
     x: 184.0
-    y: 308.0
-    z: 1.0
+    y: 305.0
+    z: -1.0
   }
   rotation {
     x: 0.0
@@ -269,8 +309,8 @@ instances {
     w: 1.0
   }
   scale3 {
-    x: 1.0
-    y: 1.0
+    x: 0.8
+    y: 0.8
     z: 1.0
   }
 }
@@ -297,13 +337,16 @@ collection_instances {
 scale_along_z: 0
 embedded_instances {
   id: "level"
+  children: "factory"
+  children: "factory1"
+  children: "factory2"
   children: "large_clouds"
   children: "large_clouds2"
   children: "small_clouds"
   children: "small_clouds2"
   data: "components {\n"
-  "  id: \"forest1\"\n"
-  "  component: \"/main/levels/begining/level0.tilemap\"\n"
+  "  id: \"forest_dark\"\n"
+  "  component: \"/main/levels/forest/forest2.tilemap\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -319,8 +362,8 @@ embedded_instances {
   "  }\n"
   "}\n"
   "components {\n"
-  "  id: \"level0\"\n"
-  "  component: \"/main/levels/begining/level0.script\"\n"
+  "  id: \"forest\"\n"
+  "  component: \"/main/levels/forest/forest.script\"\n"
   "  position {\n"
   "    x: 0.0\n"
   "    y: 0.0\n"
@@ -338,7 +381,7 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
-  "  data: \"collision_shape: \\\"/main/levels/begining/level0.tilemap\\\"\\n"
+  "  data: \"collision_shape: \\\"/main/levels/forest/forest1.tilemap\\\"\\n"
   "type: COLLISION_OBJECT_TYPE_STATIC\\n"
   "mass: 0.0\\n"
   "friction: 0.1\\n"

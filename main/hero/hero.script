@@ -2,6 +2,8 @@
 go.property("max_camera_offset", vmath.vector3(10, 20, 0))
 go.property("camera_offset_lerp", 0.05)
 go.property("crosshair", true)
+local defsave = require("defsave.defsave")
+
 
 local camera = require "orthographic.camera"
 
@@ -22,6 +24,8 @@ local EDGE = hash("edge")
 local ENEMY = hash("enemy")
 
 local COIN = hash("coin")
+local LIGHT = hash("light")
+
 local CONTACT_POINT_RESPONSE = hash("contact_point_response")
 
 
@@ -189,9 +193,21 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		elseif message.group == COIN then
+
 			msg.post("/hud/hud#hud", "current_coins",{coins = 1})
 			go.delete(message.other_id)
 			msg.post("/hud/sounds#pickupCoin", "play_sound")
+		elseif message.group == LIGHT then
+			
+			level = defsave.get("player", "level")
+			if level == 0 then
+				level = level + 1
+				defsave.set("player", "level", defsave.get("player", "level") + 1)
+			elseif level == 5 then
+				defsave.set("player", "level", 0)
+				level = 0
+			end
+			msg.post("loader:/go#loader", "level_"..level)
 		elseif message.group == RESPAWMN then
 			go.set_position(self.spawn_position)
 		end

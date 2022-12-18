@@ -64,6 +64,7 @@ function update(self,dt)
 	if self.ended ==false and self.enemies_count == 0 and self.wave == self.waves then
 		self.ended = true
 		msg.post("/hud/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
+		defsave.set("player", "level", defsave.get("player", "level") + 1)
 		self.light_pos = vmath.vector3(self.light_pos.x, self.light_pos.y, 1)
 		go.set_position(self.light_pos, "/light")
 		msg.post("light#collisionobject", "enable")

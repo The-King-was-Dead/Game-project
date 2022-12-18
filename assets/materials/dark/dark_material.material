@@ -1,7 +1,7 @@
 name: "tile_map"
 tags: "tile"
-vertex_program: "/assets/materials/dark_material.vp"
-fragment_program: "/assets/materials/dark_material.fp"
+vertex_program: "/assets/materials/dark/dark_material.vp"
+fragment_program: "/assets/materials/dark/dark_material.fp"
 vertex_space: VERTEX_SPACE_WORLD
 vertex_constants {
   name: "view_proj"

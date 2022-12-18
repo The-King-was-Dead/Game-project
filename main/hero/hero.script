@@ -203,6 +203,9 @@ function on_message(self, message_id, message, sender)
 			if level == 0 then
 				level = level + 1
 				defsave.set("player", "level", defsave.get("player", "level") + 1)
+			elseif level == 5 then
+				defsave.set("player", "level", 0)
+				level = 0
 			end
 			msg.post("loader:/go#loader", "level_"..level)
 		elseif message.group == RESPAWMN then

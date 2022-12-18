@@ -18,7 +18,7 @@ function on_input(self, action_id, action)
 			msg.post("/go#click", "play_sound")
 			level = defsave.get("player", "level")
 			if level == 1 then
-				msg.post("loader:/go#loader", "start_game")
+				msg.post("loader:/go#loader", "start_level_1")
 			elseif level == 2 then
 				msg.post("loader:/go#loader", "start_level_2")
 			end

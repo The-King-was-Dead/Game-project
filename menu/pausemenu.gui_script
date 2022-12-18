@@ -3,7 +3,7 @@ local defsave = require("defsave.defsave")
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	msg.post("#gameproxy", "load")
+	-- msg.post("#gameproxy", "load")
 	gui.set_enabled(gui.get_node("pausemenu"), false)
 	self.start = gui.get_node("Resume")
 	self.exit = gui.get_node("Exit")
@@ -11,7 +11,7 @@ function init(self)
 	self.is_exit = false
 	self.hidden = 1
 	self.paused = false
-	
+	msg.post("/go#fortress-short", "play_sound")	
 end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("proxy_loaded") then
@@ -32,25 +32,25 @@ function on_input(self, action_id, action)
 		end
 		end
 		if self.paused then
-			msg.post("#gameproxy", "set_time_step", {factor = 0, mode = 1})
+			msg.post("loader:/go", "set_time_step", {factor = 0, mode = 1})
 		else
-			msg.post("#gameproxy", "set_time_step", {factor = 1, mode = 1})
+			msg.post("loader:/go", "set_time_step", {factor = 1, mode = 1})
 		end
 	end
 		
 	if(action_id == hash("touch") and action.released == true and self.hidden == 0) then
 		local resume = gui.get_node("Resume")
 		if gui.pick_node(resume, action.x, action.y) then
-			msg.post("main:/sounds#click", "play_sound")
+			msg.post("hud:/sounds#click", "play_sound")
 			gui.set_enabled(gui.get_node("pausemenu"), false)
-			msg.post("#gameproxy", "set_time_step", {factor = 1, mode = 1})
+			msg.post("loader:/go", "set_time_step", {factor = 1, mode = 1})
 			self.hidden = 1
 			self.paused = false
 			
 		end
 		local exit = gui.get_node("Exit")
 		if(gui.pick_node(exit,action.x,action.y)) then
-			msg.post("main:/sounds#click", "play_sound")
+			msg.post("hud:/sounds#click", "play_sound")
 			defsave.save_all()
 			msg.post("@system:", "exit", {code = 0})
 		end

@@ -7,16 +7,22 @@ local timeline =
 		spawned = false,
 		count = 3,
 		time = 4,
+		difficulty = 0.4,
+		attack_rate = 2
 	},
 	{
 		spawned = false,
 		count = 5,
 		time = 60,
+		difficulty = 0.6,
+		attack_rate = 3
 	},
 	{
 		spawned = false,
 		count = 10,
-		time = 90
+		time = 90,
+		difficulty = 0.8,
+		attack_rate = 4
 	}
 }
 
@@ -24,6 +30,8 @@ function init(self)
 	-- msg.post("@render:", "use_fixed_projection", { zoom = 3, near = -10, far = 10 })
 	msg.post("@render:", "clear_color", { color = BACKGROUND_COLOR })
 	self.enemies= {}
+	self.max_speed = 100
+	self.enemies_count = 0
 	self.enemy_spawners = {}
 	self.start_time = socket.gettime()
 end
@@ -32,21 +40,23 @@ function update(self,dt)
 	time_elapsed = socket.gettime() - self.start_time
 
 	for key,value in pairs(timeline) do
-		if timeline[key].spawned == false and time_elapsed >= timeline[key].time then
-			start_enemy_spawner(self,timeline[key].count)
+		
+		if timeline[key].spawned == false and (time_elapsed >= timeline[key].time or self.enemies_count == 0) then
+			start_enemy_spawner(self,timeline[key].count,timeline[key].difficulty,timeline[key].attack_rate)
 			timeline[key].spawned = true
 		end
 	end 
 		
 end
 
-function start_enemy_spawner(self,enemies)
-	enemy_count = 0
+function start_enemy_spawner(self,enemies,difficulty,attack_rate)
+	self.enemies_count = enemies
+		enemy_count = 0
 		local delay = math.random(1, 2)
 		local timer_handle = timer.delay(delay, true, function(self,handle)
 			local position = self.enemy_spawners[math.random(1, #self.enemy_spawners)]
 			if enemy_count < enemies then
-				create_enemy(self, position)
+				create_enemy(self, position,difficulty,attack_rate)
 				enemy_count = enemy_count + 1
 			else
 				timer.cancel(handle)
@@ -54,9 +64,9 @@ function start_enemy_spawner(self,enemies)
 		end)
 end
 
-function create_enemy(self,position)
-	random_speed = math.random(10,30)
-	local id = factory.create("factory#enemy_factory",position,nil,{speed = random_speed});
+function create_enemy(self,position,difficulty, attack_rate)
+	random_speed = difficulty * self.max_speed
+	local id = factory.create("factory#enemy_factory",position,nil,{speed = random_speed,attack_rate = attack_rate});
 	self.enemies[id] = {
 		id = id
 	}
@@ -66,6 +76,9 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash("register_enemy_spawner") then
 		table.insert(self.enemy_spawners, go.get_position(message.id))
 		print("registered spawner")
+	end
+	if message_id == hash("kill_enemy") then
+		self.enemies_count = self.enemies_count -1
 	end
 	
 end

@@ -1,20 +1,18 @@
 local defsave = require("defsave.defsave")
 
+
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	self.start = gui.get_node("start")
+	self.start = gui.get_node("restart")
 	self.exit = gui.get_node("exit")
 	self.is_start = false
 	self.is_exit = false
-	defsave.appname = "theking"
-	defsave.default_data = require("menu.data")
-	defsave.load("player")
-	print(defsave.get("player","coins"))
-	
+
+
 end
 function on_input(self, action_id, action)
 	if(action_id == hash("touch") and action.released == true) then
-		local start = gui.get_node("start")
+		local start = gui.get_node("restart")
 		if(gui.pick_node(start,action.x,action.y)) then
 			msg.post("loader:/go#loader", "start_game")
 		end
@@ -34,7 +32,7 @@ function on_input(self, action_id, action)
 			end
 		else
 			if self.is_start then
-				gui.set_font(self.start, "system_font")
+				gui.set_font(self.start, "menu")
 				self.is_start = false
 			end
 		end
@@ -47,7 +45,7 @@ function on_input(self, action_id, action)
 			end
 		else
 			if self.is_exit then
-				gui.set_font(self.exit, "system_font")
+				gui.set_font(self.exit, "menu")
 				self.is_exit = false
 			end
 		end

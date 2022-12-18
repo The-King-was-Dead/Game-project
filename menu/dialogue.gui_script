@@ -1,0 +1,16 @@
+function init(self)
+	gui.set_enabled(gui.get_node("dialogue"), false)
+end
+
+function on_message(self, message_id, message, sender)
+	print("asdasda")
+	if message_id == hash("show") then
+		gui.set_enabled(gui.get_node("dialogue"), true)
+		
+	end
+	if message_id == hash("hide") then
+		gui.set_enabled(gui.get_node("dialogue"), false)
+
+	end
+		
+end

@@ -46,6 +46,7 @@ embedded_components {
   "mask: \"edge\"\n"
   "mask: \"enemy\"\n"
   "mask: \"light\"\n"
+  "mask: \"wizard\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"

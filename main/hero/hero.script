@@ -25,6 +25,7 @@ local ENEMY = hash("enemy")
 
 local COIN = hash("coin")
 local LIGHT = hash("light")
+local WIZARD = hash("wizard")
 
 local CONTACT_POINT_RESPONSE = hash("contact_point_response")
 
@@ -214,6 +215,15 @@ function on_message(self, message_id, message, sender)
 	end
 	if message_id == DAMAGE_TAKEN then
 		handle_damage_event(self,message.direction)
+	end
+	if message_id == hash("trigger_response") then
+		if message.group == WIZARD then
+			if message.enter then
+				msg.post("/hud/hud#dialogue", "show")
+			else
+				msg.post("/hud/hud#dialogue", "hide")
+			end
+		end
 	end
 end
 

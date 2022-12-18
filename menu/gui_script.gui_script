@@ -9,6 +9,7 @@ function init(self)
 	defsave.appname = "theking"
 	defsave.default_data = require("menu.data")
 	defsave.load("player")
+	defos.set_cursor_visible(true)
 	
 end
 

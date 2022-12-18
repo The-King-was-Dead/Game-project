@@ -2,7 +2,7 @@
 -- local BACKGROUND_COLOR = vmath.vector4(72/255, 159/255, 181/255, 255/255)
 local defsave = require("defsave.defsave")
 
-local BACKGROUND_COLOR = vmath.vector4(130/255, 192/255, 204/255, 255/255)
+local BACKGROUND_COLOR = vmath.vector4(25/255, 25/255, 112/255, 255/255)
 local timeline = 
 {
 	{
@@ -60,16 +60,12 @@ function update(self,dt)
 	
 	if self.ended ==false and self.enemies_count == 0 and self.wave == self.waves then
 		self.ended = true
-		msg.post("main:/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
-		defsave.set("player", "level", defsave.get("player", "level") + 1)
-		timer.delay(10, false, function(self)
-			msg.post("loader:/go#loader", "start_level_2")
-		end)
+		msg.post("level2:/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
 	end
 end
 
 function start_enemy_spawner(self,enemies,difficulty,attack_rate,spawn_rate)
-	msg.post("main:/hud#hud", "round_update",{wave = string.format("WAVE %d", self.wave + 1)})
+	msg.post("level2:/hud#hud", "round_update",{wave = string.format("WAVE %d", self.wave + 1)})
 	self.wave = self.wave + 1
 	self.enemies_count = enemies
 		enemy_count = 0

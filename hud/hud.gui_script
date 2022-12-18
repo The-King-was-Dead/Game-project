@@ -1,5 +1,6 @@
 local CURRENT_COINS = hash("current_coins")
 local CURRENT_HEALTH = hash("health_update")
+local ROUND_UPDATE = hash("round_update")
 local defsave = require("defsave.defsave")
 
 
@@ -34,6 +35,11 @@ function on_message(self, message_id, message, sender)
 	if message_id == CURRENT_HEALTH then
 		local healthNode = gui.get_node("health_count")
 		gui.set_text(healthNode, message.health)
+	end
+	if message_id == ROUND_UPDATE then
+		print("reached")
+		local roundNode = gui.get_node("text")
+		gui.set_text(roundNode, message.wave)
 	end
 	-- Add message-handling code here
 	-- Learn more: https://defold.com/manuals/message-passing/

@@ -134,6 +134,7 @@ local function handle_enemy_damage(self)
 		end)
 	end
 	self.health = self.health - 50
+	msg.post("/hud/sounds#enemyHit", "play_sound")
 	print(self.health)
 	if self.health == 0 then
 		msg.post("level#forest", "kill_enemy")

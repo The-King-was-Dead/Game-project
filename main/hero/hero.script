@@ -61,7 +61,6 @@ function init(self)
 	self.correction = vmath.vector3()
 	self.tint_animation = false
 end
-
 local function play_animation(self, anim)
 	-- only play animations which are not already playing
 	if anim ~= self.anim then
@@ -71,6 +70,7 @@ local function play_animation(self, anim)
 end
 
 local function handle_damage_event(self,direction)
+	
 	self.health = self.health - 10
 	if self.health == 0 then
 		msg.post("loader:/go#loader", "end_game")
@@ -83,8 +83,10 @@ local function handle_damage_event(self,direction)
 		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD,to, go.EASING_INOUTQUAD, 0.2)
 	end
 	
+
 	msg.post("/hud/hud#hud", "health_update",{health = self.health})
-	camera.shake(CAMERA_ID, 0.004, 0.25,hash("both"));
+	msg.post("/hud/sounds#hitHurt", "play_sound")
+		camera.shake(CAMERA_ID, 0.004, 0.25,hash("both"));
 	if not self.tint_animation then
 		self.tint_animation = true
 		go.animate("hero#hero", "tint", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 0, 0, 4), custom_easing, .3,0,function() 
@@ -165,6 +167,7 @@ end
 -- end
 
 
+
 function on_message(self, message_id, message, sender)
 	-- check if we received a contact point message
 	if message_id == CONTACT_POINT_RESPONSE then
@@ -188,6 +191,7 @@ function on_message(self, message_id, message, sender)
 		elseif message.group == COIN then
 			msg.post("/hud/hud#hud", "current_coins",{coins = 1})
 			go.delete(message.other_id)
+			msg.post("/hud/sounds#pickupCoin", "play_sound")
 		elseif message.group == RESPAWMN then
 			go.set_position(self.spawn_position)
 		end

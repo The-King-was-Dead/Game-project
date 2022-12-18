@@ -18,6 +18,7 @@ function init(self)
 end
 
 function on_message(self, message_id, message, sender)
+
 	if message_id == hash("start_level_1") then -- <4>
 		show(self, "go#level1proxy")
 	elseif message_id == hash("start_level_2") then

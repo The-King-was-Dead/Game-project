@@ -10,6 +10,7 @@ local function show(self, proxy) -- <5>
 end
 
 function init(self)
+	defos.set_cursor(defos.CURSOR_HAND)
 	msg.post(".", "acquire_input_focus") -- <1>
 	self.current_proxy = nil -- <2>
 	msg.post("#", "show_menu") -- <3>

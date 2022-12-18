@@ -33,6 +33,7 @@ local timeline =
 
 function init(self)
 	-- msg.post("@render:", "use_fixed_projection", { zoom = 3, near = -10, far = 10 })
+	defos.set_cursor_visible(false)
 	msg.post("@render:", "clear_color", { color = BACKGROUND_COLOR })
 	self.enemies= {}
 	self.max_speed = 100

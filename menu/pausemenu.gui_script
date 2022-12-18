@@ -11,7 +11,12 @@ function init(self)
 	self.is_exit = false
 	self.hidden = 1
 	self.paused = false
+<<<<<<< HEAD
 	msg.post("/go#fortress-short", "play_sound")	
+=======
+	defos.set_cursor_visible(true)
+	
+>>>>>>> 7598371ac2c0bd62b30c6cfda8125efe8f05f337
 end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("proxy_loaded") then
@@ -23,10 +28,12 @@ function on_input(self, action_id, action)
 	if action_id == hash("pause") and action.released then
 		if self.hidden == 1 then
 			gui.set_enabled(gui.get_node("pausemenu"), true)
+			defos.set_cursor_visible(true)
 			self.hidden = 0
 			self.paused = true
 		else if self.hidden == 0 then
 			gui.set_enabled(gui.get_node("pausemenu"), false)
+			defos.set_cursor_visible(false)
 			self.hidden = 1
 			self.paused = false
 		end
@@ -43,6 +50,7 @@ function on_input(self, action_id, action)
 		if gui.pick_node(resume, action.x, action.y) then
 			msg.post("hud:/sounds#click", "play_sound")
 			gui.set_enabled(gui.get_node("pausemenu"), false)
+			defos.set_cursor_visible(false)
 			msg.post("loader:/go", "set_time_step", {factor = 1, mode = 1})
 			self.hidden = 1
 			self.paused = false

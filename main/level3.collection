@@ -234,7 +234,7 @@ instances {
 }
 instances {
   id: "hero"
-  prototype: "/main/levels/hero/hero.go"
+  prototype: "/main/hero/hero.go"
   children: "bow"
   children: "sword"
   position {

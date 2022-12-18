@@ -193,13 +193,17 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		elseif message.group == COIN then
-			print("coin")
+
 			msg.post("/hud/hud#hud", "current_coins",{coins = 1})
 			go.delete(message.other_id)
 			msg.post("/hud/sounds#pickupCoin", "play_sound")
 		elseif message.group == LIGHT then
-			print("light")
+			
 			level = defsave.get("player", "level")
+			if level == 0 then
+				level = level + 1
+				defsave.set("player", "level", defsave.get("player", "level") + 1)
+			end
 			msg.post("loader:/go#loader", "level_"..level)
 		elseif message.group == RESPAWMN then
 			go.set_position(self.spawn_position)

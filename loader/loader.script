@@ -13,19 +13,20 @@ function init(self)
 	msg.post(".", "acquire_input_focus") -- <1>
 	self.current_proxy = nil -- <2>
 	msg.post("#", "show_menu") -- <3>
+	show(self, "go#pause")
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("start_game") then -- <4>
-		show(self, "go#main")
+	if message_id == hash("start_level_1") then -- <4>
+		show(self, "go#level1proxy")
+	elseif message_id == hash("start_level_2") then
+		show(self,"go#level2proxy")
 	elseif message_id == hash("resume") then
-		show(self, "go#pausemenu")
+		show(self, "go#pause")
 	elseif message_id == hash("show_menu") then
 		show(self, "go#mainmenu")
 	elseif message_id == hash("end_game") then
 		show(self, "go#death_screen")
-	elseif message_id == hash("start_level_2") then
-		show(self,"go#level2")
 	elseif message_id == hash("proxy_loaded") then -- <9>
 		self.current_proxy = sender -- <10>
 		msg.post(sender, "enable") -- <11>

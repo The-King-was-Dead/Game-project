@@ -16,7 +16,7 @@ function on_input(self, action_id, action)
 		local start = gui.get_node("restart")
 		if(gui.pick_node(start,action.x,action.y)) then
 			defsave.save_all()
-			msg.post("loader:/go#loader", "start_game")
+			msg.post("loader:/go#loader", "start_level_1")
 		end
 	end
 	if(action_id == hash("touch") and action.released == true) then

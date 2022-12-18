@@ -60,7 +60,7 @@ function update(self,dt)
 	
 	if self.ended ==false and self.enemies_count == 0 and self.wave == self.waves then
 		self.ended = true
-		msg.post("main:/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
+		msg.post("level1:/hud/hud#hud", "round_update",{wave = "LEVEL COMPLETED"})
 		defsave.set("player", "level", defsave.get("player", "level") + 1)
 		timer.delay(10, false, function(self)
 			msg.post("loader:/go#loader", "start_level_2")
@@ -69,7 +69,7 @@ function update(self,dt)
 end
 
 function start_enemy_spawner(self,enemies,difficulty,attack_rate,spawn_rate)
-	msg.post("main:/hud#hud", "round_update",{wave = string.format("WAVE %d", self.wave + 1)})
+	msg.post("level1:/hud/hud#hud", "round_update",{wave = string.format("WAVE %d", self.wave + 1)})
 	self.wave = self.wave + 1
 	self.enemies_count = enemies
 		enemy_count = 0

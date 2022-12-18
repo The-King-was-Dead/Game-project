@@ -83,7 +83,7 @@ local function handle_damage_event(self,direction)
 		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD,to, go.EASING_INOUTQUAD, 0.2)
 	end
 	
-	msg.post("main:/hud#hud", "health_update",{health = self.health})
+	msg.post("/hud/hud#hud", "health_update",{health = self.health})
 	camera.shake(CAMERA_ID, 0.004, 0.25,hash("both"));
 	if not self.tint_animation then
 		self.tint_animation = true
@@ -186,7 +186,7 @@ function on_message(self, message_id, message, sender)
 				end
 			end
 		elseif message.group == COIN then
-			msg.post("main:/hud#hud", "current_coins",{coins = 1})
+			msg.post("/hud/hud#hud", "current_coins",{coins = 1})
 			go.delete(message.other_id)
 		elseif message.group == RESPAWMN then
 			go.set_position(self.spawn_position)

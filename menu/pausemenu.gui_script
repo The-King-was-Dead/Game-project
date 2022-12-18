@@ -3,7 +3,7 @@ local defsave = require("defsave.defsave")
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
-	msg.post("#gameproxy", "load")
+	-- msg.post("#gameproxy", "load")
 	gui.set_enabled(gui.get_node("pausemenu"), false)
 	self.start = gui.get_node("Resume")
 	self.exit = gui.get_node("Exit")
@@ -32,9 +32,9 @@ function on_input(self, action_id, action)
 		end
 		end
 		if self.paused then
-			msg.post("#gameproxy", "set_time_step", {factor = 0, mode = 1})
+			msg.post("loader:/go", "set_time_step", {factor = 0, mode = 1})
 		else
-			msg.post("#gameproxy", "set_time_step", {factor = 1, mode = 1})
+			msg.post("loader:/go", "set_time_step", {factor = 1, mode = 1})
 		end
 	end
 		
@@ -42,7 +42,7 @@ function on_input(self, action_id, action)
 		local resume = gui.get_node("Resume")
 		if gui.pick_node(resume, action.x, action.y) then
 			gui.set_enabled(gui.get_node("pausemenu"), false)
-			msg.post("#gameproxy", "set_time_step", {factor = 1, mode = 1})
+			msg.post("loader:/go", "set_time_step", {factor = 1, mode = 1})
 			self.hidden = 1
 			self.paused = false
 			

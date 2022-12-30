@@ -8,7 +8,7 @@ By
 
 ### Tiny rogue meets RPG meets binding of Isaac.
 
-### Gameplay
+### Prototype
 https://youtu.be/Sz-Tf6tm-oU 
 
 ## Story
